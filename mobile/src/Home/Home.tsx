@@ -1,6 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import scrollDownIcon from '../assets/scroll-down.svg';
+import { io } from 'socket.io-client';
+
+const SERVER_URL = 'http://localhost:3000';
+
 const Home = () => {
+  useEffect(() => {
+    const socket = io(SERVER_URL);
+    socket.on('connect', () => {
+      console.log('Connected to server');
+    });
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   return (
     <main className=" w-full px-8">
       <section className="mb-16">
