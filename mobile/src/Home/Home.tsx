@@ -10,7 +10,13 @@ const Home = () => {
     socket.on('connect', () => {
       console.log('Connected to server');
     });
+
+    const emitScroll = () => {
+      socket.emit('scroll', window.scrollY);
+    };
+    addEventListener('scroll', emitScroll);
     return () => {
+      removeEventListener('scroll', emitScroll);
       socket.disconnect();
     };
   }, []);
